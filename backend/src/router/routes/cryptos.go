@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"backend/src/controllers"
 	"net/http"
 )
 
@@ -8,7 +9,7 @@ var cryptosRoutes = []Route{
 	{
 		URI:             "/v1/crypto-upvote/cryptos",
 		Method:          http.MethodGet,
-		Function:        func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("Get Cryptos!")) },
+		Function:        controllers.GetCryptos,
 		IsAuthenticated: false,
 	},
 	{
