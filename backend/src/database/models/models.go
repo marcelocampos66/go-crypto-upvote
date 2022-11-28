@@ -11,7 +11,7 @@ type Crypto struct {
 	ID        int
 	Name      string `json:"cryptoName"`
 	Code      string `json:"cryptoSimbol"`
-	Votes     uint   `json:"votes" gorm:"default:0"`
+	Votes     int    `json:"votes" gorm:"default:1"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

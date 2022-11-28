@@ -30,3 +30,23 @@ func (this CryptoRepository) GetPageOfCryptos(page uint) ([]entities.Crypto, err
 
 	return cryptos, nil
 }
+
+func (this CryptoRepository) GetCryptoById(cryptoId uint) (entities.Crypto, error) {
+	var crypto entities.Crypto
+
+	result := this.db.First(&crypto, cryptoId)
+	if result.Error != nil && result.Error.Error() != "record not found" {
+		return crypto, result.Error
+	}
+
+	return crypto, nil
+}
+
+func (this CryptoRepository) Vote(cryptoId uint, crypto *entities.Crypto) error {
+	result := this.db.Where("id = ?", cryptoId).Updates(crypto)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}

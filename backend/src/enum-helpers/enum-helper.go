@@ -1,5 +1,8 @@
 package enumhelper
 
 const (
-	PageSize int = 10
+	ConnectDatabaseFailure string = "Failed when trying to connect to the database"
+	PageSize               int    = 10
+	CryptoNotFound         string = "Crypto not found"
+	InvalidParam           string = "Invalid Param"
 )

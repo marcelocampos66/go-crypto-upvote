@@ -9,6 +9,10 @@ import (
 	"net/http"
 )
 
+type teste struct {
+	vote int
+}
+
 func main() {
 	config.InitialConfigs()
 
@@ -20,6 +24,6 @@ func main() {
 	}
 	database.RunMigrationsAndSeeds(db)
 
-	fmt.Printf("Server listening on port: %d!", config.PORT)
+	fmt.Printf("Server listening on port: %d!\n", config.PORT)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.PORT), router))
 }

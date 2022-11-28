@@ -15,13 +15,13 @@ var cryptosRoutes = []Route{
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}/up",
 		Method:          http.MethodPut,
-		Function:        func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("Up vote")) },
-		IsAuthenticated: true,
+		Function:        controllers.Vote,
+		IsAuthenticated: false,
 	},
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}/down",
 		Method:          http.MethodPut,
-		Function:        func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("Down vote")) },
-		IsAuthenticated: true,
+		Function:        controllers.Vote,
+		IsAuthenticated: false,
 	},
 }
