@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"backend/src/database"
 	enumhelper "backend/src/enum-helpers"
 	httphelper "backend/src/http-helper"
 	"backend/src/repositories"
@@ -13,7 +12,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func GetCryptos(writer http.ResponseWriter, request *http.Request) {
+type CryptoController struct {
+	CryptoRepository repositories.ICryptoRepository
+}
+
+func (this CryptoController) GetCryptos(writer http.ResponseWriter, request *http.Request) {
 	var page uint
 	urlQuery, err := strconv.ParseUint(request.URL.Query().Get("page"), 10, 64)
 	if err != nil {
@@ -26,15 +29,7 @@ func GetCryptos(writer http.ResponseWriter, request *http.Request) {
 		page = uint(urlQuery)
 	}
 
-	db, err := database.Connect()
-	if err != nil {
-		httphelper.HttpErrorResponse(writer, http.StatusInternalServerError, errors.New(enumhelper.ConnectDatabaseFailure))
-		return
-	}
-
-	repository := repositories.NewCryptoRepository(db)
-
-	cryptos, err := repository.GetPageOfCryptos(page)
+	cryptos, err := this.CryptoRepository.GetPageOfCryptos(page)
 	if err != nil {
 		httphelper.HttpErrorResponse(writer, http.StatusInternalServerError, err)
 		return
@@ -43,7 +38,7 @@ func GetCryptos(writer http.ResponseWriter, request *http.Request) {
 	httphelper.HttpResponse(writer, http.StatusOK, cryptos)
 }
 
-func Vote(writer http.ResponseWriter, request *http.Request) {
+func (this CryptoController) Vote(writer http.ResponseWriter, request *http.Request) {
 	params := mux.Vars(request)
 	var isLikeVoteAction bool = strings.HasSuffix(request.RequestURI, "up")
 
@@ -53,15 +48,7 @@ func Vote(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	db, err := database.Connect()
-	if err != nil {
-		httphelper.HttpErrorResponse(writer, http.StatusInternalServerError, errors.New(enumhelper.ConnectDatabaseFailure))
-		return
-	}
-
-	repository := repositories.NewCryptoRepository(db)
-
-	crypto, err := repository.GetCryptoById(uint(cryptoId))
+	crypto, err := this.CryptoRepository.GetCryptoById(uint(cryptoId))
 	if err != nil {
 		httphelper.HttpErrorResponse(writer, http.StatusNotFound, errors.New(enumhelper.CryptoNotFound))
 		return
@@ -73,7 +60,7 @@ func Vote(writer http.ResponseWriter, request *http.Request) {
 		crypto.Votes += 1
 	}
 
-	err = repository.Vote(uint(cryptoId), &crypto)
+	err = this.CryptoRepository.Vote(uint(cryptoId), &crypto)
 	if err != nil {
 		httphelper.HttpErrorResponse(writer, http.StatusInternalServerError, err)
 		return

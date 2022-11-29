@@ -1,29 +1,33 @@
 package repositories
 
 import (
+	"backend/src/database"
 	"backend/src/entities"
 	enumhelper "backend/src/enum-helpers"
-
-	"gorm.io/gorm"
 )
 
-type CryptoRepository struct {
-	db *gorm.DB
+type ICryptoRepository interface {
+	GetPageOfCryptos(page uint) ([]entities.Crypto, error)
+	GetCryptoById(cryptoId uint) (entities.Crypto, error)
+	Vote(cryptoId uint, crypto *entities.Crypto) error
 }
 
-func NewCryptoRepository(db *gorm.DB) *CryptoRepository {
-	return &CryptoRepository{db}
-}
+type CryptoRepository struct{}
 
 func (this CryptoRepository) GetPageOfCryptos(page uint) ([]entities.Crypto, error) {
 	var offset uint = 0
 	var cryptos []entities.Crypto
 
+	db, err := database.Connect()
+	if err != nil {
+		return cryptos, err
+	}
+
 	if page > 1 {
 		offset = (page - uint(1)) * uint(enumhelper.PageSize)
 	}
 
-	result := this.db.Limit(enumhelper.PageSize).Offset(int(offset)).Find(&cryptos)
+	result := db.Limit(enumhelper.PageSize).Offset(int(offset)).Find(&cryptos)
 	if result.Error != nil {
 		return cryptos, result.Error
 	}
@@ -34,7 +38,12 @@ func (this CryptoRepository) GetPageOfCryptos(page uint) ([]entities.Crypto, err
 func (this CryptoRepository) GetCryptoById(cryptoId uint) (entities.Crypto, error) {
 	var crypto entities.Crypto
 
-	result := this.db.First(&crypto, cryptoId)
+	db, err := database.Connect()
+	if err != nil {
+		return crypto, err
+	}
+
+	result := db.First(&crypto, cryptoId)
 	if result.Error != nil && result.Error.Error() != "record not found" {
 		return crypto, result.Error
 	}
@@ -43,7 +52,12 @@ func (this CryptoRepository) GetCryptoById(cryptoId uint) (entities.Crypto, erro
 }
 
 func (this CryptoRepository) Vote(cryptoId uint, crypto *entities.Crypto) error {
-	result := this.db.Where("id = ?", cryptoId).Updates(crypto)
+	db, err := database.Connect()
+	if err != nil {
+		return err
+	}
+
+	result := db.Where("id = ?", cryptoId).Updates(crypto)
 	if result.Error != nil {
 		return result.Error
 	}
