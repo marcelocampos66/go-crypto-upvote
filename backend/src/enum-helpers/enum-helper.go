@@ -8,4 +8,6 @@ const (
 	InvalidCryptoCode      string = "Invalid crypto code"
 	EmailHasBeenRegistered string = "This email has already been registered"
 	UserNotFound           string = "User not found"
+	InvalidToken           string = "Invalid Token"
+	EmailOrPasswordWrong   string = "Invalid email or password."
 )

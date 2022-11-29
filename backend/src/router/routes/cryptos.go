@@ -15,24 +15,24 @@ var cryptosRoutes = []Route{
 		URI:             "/v1/crypto-upvote/cryptos",
 		Method:          http.MethodGet,
 		Function:        cryptosController.GetCryptos,
-		IsAuthenticated: false,
+		IsAuthenticated: true,
 	},
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}",
 		Method:          http.MethodGet,
 		Function:        cryptosController.GetCrypto,
-		IsAuthenticated: false,
+		IsAuthenticated: true,
 	},
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}/up",
 		Method:          http.MethodPut,
 		Function:        cryptosController.Vote,
-		IsAuthenticated: false,
+		IsAuthenticated: true,
 	},
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}/down",
 		Method:          http.MethodPut,
 		Function:        cryptosController.Vote,
-		IsAuthenticated: false,
+		IsAuthenticated: true,
 	},
 }

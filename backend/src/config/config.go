@@ -10,8 +10,9 @@ import (
 )
 
 var (
-	DB_URL = ""
-	PORT   = 0
+	DB_URL     = ""
+	PORT       = 0
+	JWT_SECRET = ""
 )
 
 func loadEnviromentVars() {
@@ -27,6 +28,7 @@ func loadEnviromentVars() {
 	}
 
 	DB_URL = os.Getenv("DB_URL")
+	JWT_SECRET = os.Getenv("JWT_SECRET")
 }
 
 func InitialConfigs() {
