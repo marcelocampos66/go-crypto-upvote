@@ -5,7 +5,6 @@ import (
 	httphelper "backend/src/http-helper"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -86,7 +85,7 @@ func (this ImagesController) GetImage(writer http.ResponseWriter, request *http.
 
 	rootPath, _ := os.Getwd()
 	filePath := fmt.Sprintf("%s%s", rootPath, relativePath)
-	log.Print("filePath", filePath)
 
+	writer.WriteHeader(http.StatusOK)
 	http.ServeFile(writer, request, filePath)
 }
