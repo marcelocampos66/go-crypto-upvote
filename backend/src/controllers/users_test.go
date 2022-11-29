@@ -4,7 +4,6 @@ import (
 	"backend/src/entities"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -42,7 +41,7 @@ func (this MockUsersRepository) GetUserById(userId uint) (entities.User, error) 
 func TestUsersController(t *testing.T) {
 	t.Run("CreateUser: Should create a user", func(t *testing.T) {
 		stringfiedBody := `{"name":"Unknow User","email":"email@email.com","password":"123456"}`
-		request := httptest.NewRequest(http.MethodGet, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
+		request := httptest.NewRequest(http.MethodPost, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
 		writer := httptest.NewRecorder()
 
 		repository := MockUsersRepository{}
@@ -70,7 +69,7 @@ func TestUsersController(t *testing.T) {
 
 	t.Run("CreateUser: Should return a error if dont pass email to register", func(t *testing.T) {
 		stringfiedBody := `{"name":"Unknow User","password":"123456"}`
-		request := httptest.NewRequest(http.MethodGet, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
+		request := httptest.NewRequest(http.MethodPost, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
 		writer := httptest.NewRecorder()
 
 		repository := MockUsersRepository{}
@@ -98,7 +97,7 @@ func TestUsersController(t *testing.T) {
 
 	t.Run("CreateUser: Should return a error if dont pass name to register", func(t *testing.T) {
 		stringfiedBody := `{"email":"email@email.com","password":"123456"}`
-		request := httptest.NewRequest(http.MethodGet, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
+		request := httptest.NewRequest(http.MethodPost, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
 		writer := httptest.NewRecorder()
 
 		repository := MockUsersRepository{}
@@ -126,7 +125,7 @@ func TestUsersController(t *testing.T) {
 
 	t.Run("CreateUser: Should return a error if dont pass password to register", func(t *testing.T) {
 		stringfiedBody := `{"name":"Unknow User","email":"email@email.com"}`
-		request := httptest.NewRequest(http.MethodGet, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
+		request := httptest.NewRequest(http.MethodPost, "/v1/crypto-upvote/users", strings.NewReader(stringfiedBody))
 		writer := httptest.NewRecorder()
 
 		repository := MockUsersRepository{}
@@ -153,7 +152,7 @@ func TestUsersController(t *testing.T) {
 	})
 
 	t.Run("GetUser: Should return a registered user", func(t *testing.T) {
-		request := httptest.NewRequest(http.MethodGet, "/v1/crypto-upvote/users/1", nil)
+		request := httptest.NewRequest(http.MethodPost, "/v1/crypto-upvote/users/1", nil)
 		writer := httptest.NewRecorder()
 
 		vars := map[string]string{
@@ -176,8 +175,6 @@ func TestUsersController(t *testing.T) {
 		responseBody, _ := ioutil.ReadAll(result.Body)
 		var body entities.User
 		json.Unmarshal(responseBody, &body)
-
-		log.Print(body)
 
 		if !reflect.DeepEqual(http.StatusOK, result.StatusCode) {
 			t.Errorf("wanted: %d, got: %d", http.StatusOK, result.StatusCode)
