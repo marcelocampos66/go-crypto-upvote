@@ -10,12 +10,9 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
-	"gorm.io/gorm"
 )
 
-type MockCryptoRepository struct {
-	db *gorm.DB
-}
+type MockCryptoRepository struct{}
 
 func (this MockCryptoRepository) GetPageOfCryptos(page uint) ([]entities.Crypto, error) {
 	cryptos := []entities.Crypto{
