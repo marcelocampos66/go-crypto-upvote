@@ -20,7 +20,7 @@ var usersRoutes = []Route{
 	{
 		URI:             "/v1/crypto-upvote/users/{userId}",
 		Method:          http.MethodGet,
-		Function:        func(w http.ResponseWriter, r *http.Request) {},
+		Function:        usersController.GetUser,
 		IsAuthenticated: true,
 	},
 }

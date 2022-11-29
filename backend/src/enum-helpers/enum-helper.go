@@ -7,4 +7,5 @@ const (
 	InvalidParam           string = "Invalid Param"
 	InvalidCryptoCode      string = "Invalid crypto code"
 	EmailHasBeenRegistered string = "This email has already been registered"
+	UserNotFound           string = "User not found"
 )

@@ -8,6 +8,7 @@ import (
 type IUserRepository interface {
 	Create(user *entities.User) (int, error)
 	GetUserByEmail(email string) (entities.User, error)
+	GetUserById(userId uint) (entities.User, error)
 }
 
 type UserRepository struct{}
@@ -36,6 +37,22 @@ func (this UserRepository) GetUserByEmail(email string) (entities.User, error) {
 
 	result := db.Where("email = ?", email).Find(&user)
 	if result.Error != nil {
+		return user, result.Error
+	}
+
+	return user, nil
+}
+
+func (this UserRepository) GetUserById(userId uint) (entities.User, error) {
+	var user entities.User
+
+	db, err := database.Connect()
+	if err != nil {
+		return user, err
+	}
+
+	result := db.First(&user, userId)
+	if result.Error != nil && result.Error.Error() != "record not found" {
 		return user, result.Error
 	}
 

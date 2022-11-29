@@ -10,6 +10,9 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 type UsersController struct {
@@ -58,4 +61,29 @@ func (this UsersController) CreateUser(writer http.ResponseWriter, request *http
 	}
 
 	httphelper.HttpResponse(writer, http.StatusCreated, map[string]int{"id": insertedId})
+}
+
+func (this UsersController) GetUser(writer http.ResponseWriter, request *http.Request) {
+	params := mux.Vars(request)
+
+	userId, err := strconv.ParseUint(params["userId"], 10, 64)
+	if err != nil {
+		httphelper.HttpErrorResponse(writer, http.StatusBadRequest, err)
+		return
+	}
+
+	user, err := this.UsersRepository.GetUserById(uint(userId))
+	if err != nil {
+		httphelper.HttpErrorResponse(writer, http.StatusInternalServerError, err)
+		return
+	}
+
+	if user.Id == 0 {
+		httphelper.HttpErrorResponse(writer, http.StatusNotFound, errors.New(enumhelper.UserNotFound))
+		return
+	}
+
+	user.Password = ""
+
+	httphelper.HttpResponse(writer, http.StatusOK, user)
 }
