@@ -15,3 +15,13 @@ type Crypto struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type User struct {
+	gorm.Model
+	ID        int
+	Name      string
+	Email     string
+	Password  string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}

@@ -46,6 +46,7 @@ func RunMigrationsAndSeeds(db *gorm.DB) {
 			seedCryptoTable(db)
 		}
 	}
+	db.AutoMigrate(&database.User{})
 }
 
 func Connect() (*gorm.DB, error) {
