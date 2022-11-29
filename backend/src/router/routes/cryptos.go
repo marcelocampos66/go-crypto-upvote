@@ -18,6 +18,12 @@ var cryptosRoutes = []Route{
 		IsAuthenticated: false,
 	},
 	{
+		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}",
+		Method:          http.MethodGet,
+		Function:        controller.GetCrypto,
+		IsAuthenticated: false,
+	},
+	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}/up",
 		Method:          http.MethodPut,
 		Function:        controller.Vote,

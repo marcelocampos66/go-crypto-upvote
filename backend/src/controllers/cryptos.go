@@ -38,6 +38,24 @@ func (this CryptoController) GetCryptos(writer http.ResponseWriter, request *htt
 	httphelper.HttpResponse(writer, http.StatusOK, cryptos)
 }
 
+func (this CryptoController) GetCrypto(writer http.ResponseWriter, request *http.Request) {
+	params := mux.Vars(request)
+
+	cryptoId, err := strconv.ParseUint(params["cryptoId"], 10, 64)
+	if err != nil {
+		httphelper.HttpErrorResponse(writer, http.StatusBadRequest, errors.New(enumhelper.InvalidParam))
+		return
+	}
+
+	crypto, err := this.CryptoRepository.GetCryptoById(uint(cryptoId))
+	if err != nil {
+		httphelper.HttpErrorResponse(writer, http.StatusNotFound, errors.New(enumhelper.CryptoNotFound))
+		return
+	}
+
+	httphelper.HttpResponse(writer, http.StatusOK, crypto)
+}
+
 func (this CryptoController) Vote(writer http.ResponseWriter, request *http.Request) {
 	params := mux.Vars(request)
 	var isLikeVoteAction bool = strings.HasSuffix(request.RequestURI, "up")

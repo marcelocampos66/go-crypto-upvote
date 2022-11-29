@@ -27,7 +27,7 @@ func (this CryptoRepository) GetPageOfCryptos(page uint) ([]entities.Crypto, err
 		offset = (page - uint(1)) * uint(enumhelper.PageSize)
 	}
 
-	result := db.Limit(enumhelper.PageSize).Offset(int(offset)).Find(&cryptos)
+	result := db.Limit(enumhelper.PageSize).Offset(int(offset)).Order("id asc").Find(&cryptos)
 	if result.Error != nil {
 		return cryptos, result.Error
 	}

@@ -31,7 +31,12 @@ func (this MockCryptoRepository) GetPageOfCryptos(page uint) ([]entities.Crypto,
 }
 
 func (this MockCryptoRepository) GetCryptoById(cryptoId uint) (entities.Crypto, error) {
-	var crypto entities.Crypto
+	crypto := entities.Crypto{
+		Id:    1,
+		Name:  "Bitcoin",
+		Code:  "BTC",
+		Votes: 1,
+	}
 
 	return crypto, nil
 }
@@ -72,6 +77,42 @@ func TestCryptosController(t *testing.T) {
 		}
 		if body[0].Code != "BTC" {
 			t.Errorf("wanted: %s, got: %s", "BTC", body[0].Code)
+		}
+	})
+
+	t.Run("GetCrypto", func(t *testing.T) {
+		request := httptest.NewRequest(http.MethodGet, "/v1/crypto-upvote/cryptos/1", nil)
+		writer := httptest.NewRecorder()
+
+		vars := map[string]string{
+			"cryptoId": "1",
+		}
+
+		request = mux.SetURLVars(request, vars)
+
+		repository := MockCryptoRepository{}
+
+		cryptoController := CryptoController{
+			CryptoRepository: repository,
+		}
+
+		cryptoController.GetCrypto(writer, request)
+
+		result := writer.Result()
+		defer result.Body.Close()
+
+		responseBody, _ := ioutil.ReadAll(result.Body)
+		var body entities.Crypto
+		json.Unmarshal(responseBody, &body)
+
+		if !reflect.DeepEqual(http.StatusOK, result.StatusCode) {
+			t.Errorf("wanted: %d, got: %d", http.StatusOK, result.StatusCode)
+		}
+		if body.Name != "Bitcoin" {
+			t.Errorf("wanted: %s, got: %s", "Bitcoin", body.Name)
+		}
+		if body.Code != "BTC" {
+			t.Errorf("wanted: %s, got: %s", "BTC", body.Code)
 		}
 	})
 
