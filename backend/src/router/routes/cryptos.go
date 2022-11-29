@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-var controller controllers.CryptoController = controllers.CryptoController{
+var cryptosController controllers.CryptoController = controllers.CryptoController{
 	CryptoRepository: repositories.CryptoRepository{},
 }
 
@@ -14,25 +14,25 @@ var cryptosRoutes = []Route{
 	{
 		URI:             "/v1/crypto-upvote/cryptos",
 		Method:          http.MethodGet,
-		Function:        controller.GetCryptos,
+		Function:        cryptosController.GetCryptos,
 		IsAuthenticated: false,
 	},
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}",
 		Method:          http.MethodGet,
-		Function:        controller.GetCrypto,
+		Function:        cryptosController.GetCrypto,
 		IsAuthenticated: false,
 	},
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}/up",
 		Method:          http.MethodPut,
-		Function:        controller.Vote,
+		Function:        cryptosController.Vote,
 		IsAuthenticated: false,
 	},
 	{
 		URI:             "/v1/crypto-upvote/cryptos/{cryptoId}/down",
 		Method:          http.MethodPut,
-		Function:        controller.Vote,
+		Function:        cryptosController.Vote,
 		IsAuthenticated: false,
 	},
 }

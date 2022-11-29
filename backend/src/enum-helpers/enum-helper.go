@@ -5,4 +5,5 @@ const (
 	PageSize               int    = 10
 	CryptoNotFound         string = "Crypto not found"
 	InvalidParam           string = "Invalid Param"
+	InvalidCryptoCode      string = "Invalid crypto code"
 )
