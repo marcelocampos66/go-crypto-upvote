@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 type teste struct {
@@ -25,5 +27,12 @@ func main() {
 	database.RunMigrationsAndSeeds(db)
 
 	fmt.Printf("Server listening on port: %d!\n", config.PORT)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.PORT), router))
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		Debug:            true,
+	})
+	httpHandler := cors.Default().Handler(router)
+	xablau := c.Handler(httpHandler)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.PORT), xablau))
 }
