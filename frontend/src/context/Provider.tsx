@@ -9,6 +9,7 @@ const Provider: React.FC = ({ children }) => {
   const [name, setName] = useState<string>(DEFAULT_STATE.name);
   const [errorMessage, setErrorMessage] =
     useState<string>(DEFAULT_STATE.errorMessage);
+  const [cryptos, setCryptos] = useState<[] | TCrypto[]>([]);
 
   const contextValue = {
     register,
@@ -19,6 +20,8 @@ const Provider: React.FC = ({ children }) => {
     setName,
     errorMessage,
     setErrorMessage,
+    cryptos,
+    setCryptos,
   };
 
   return (

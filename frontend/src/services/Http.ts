@@ -49,6 +49,33 @@ class UsersApi {
       .catch((err) => err);
   }
 
+  public async cryptoVoteUp(id: number, token: string) {
+    const endpoint = `${this.url}/v1/crypto-upvote/cryptos/${id}/up`
+    return fetch(endpoint, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': this.content,
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => err);
+  }
+
+  public async cryptoVoteDown(id: number, token: string) {
+    const endpoint = `${this.url}/v1/crypto-upvote/cryptos/${id}/down`
+    return fetch(endpoint, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': this.content,
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => err);
+  }
 }
 
 export default new UsersApi();

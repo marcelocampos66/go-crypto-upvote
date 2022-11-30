@@ -1,42 +1,52 @@
 [
   {
     "cryptoName": "Bitcoin",
-    "cryptoSimbol": "BTC"
+    "cryptoSimbol": "BTC",
+    "imageUrl": "https://i.pinimg.com/736x/ef/da/8b/efda8b6316786f2ff349f3065974249b--bitcoin-logo-logo-google.jpg"
   },
   {
     "cryptoName": "Ethereum",
-    "cryptoSimbol": "ETH"
+    "cryptoSimbol": "ETH",
+    "imageUrl": "https://d33wubrfki0l68.cloudfront.net/fcd4ecd90386aeb50a235ddc4f0063cfbb8a7b66/4295e/static/bfc04ac72981166c740b189463e1f74c/40129/eth-diamond-black-white.jpg"
   },
   {
     "cryptoName": "USD Coin",
-    "cryptoSimbol": "USDC"
+    "cryptoSimbol": "USDC",
+    "imageUrl": "https://thumbs.dreamstime.com/b/usdc-usd-coin-crypto-coins-cryptocurrency-logo-market-emblem-icos-tokens-134851185.jpg"
   },
   {
     "cryptoName": "XRP",
-    "cryptoSimbol": "XRP"
+    "cryptoSimbol": "XRP",
+    "imageUrl": "https://m.media-amazon.com/images/I/51NC-dULqEL.jpg"
   },
   {
     "cryptoName": "Dogecoin",
-    "cryptoSimbol": "DOGE"
+    "cryptoSimbol": "DOGE",
+    "imageUrl": "https://img.freepik.com/premium-vector/dogecoin-doge-golden-white-background-coin-cryptocurrency-blockchain-digital-future-currency_674449-92.jpg?w=2000"
   },
   {
     "cryptoName": "Cardano",
-    "cryptoSimbol": "ADA"
+    "cryptoSimbol": "ADA",
+    "imageUrl": "https://thumbs.dreamstime.com/b/o-ada-de-cardano-descentralizou-blockchain-p%C3%BAblico-e-mergulhou-cryptocurrency-contrata-logotipo-azul-branco-do-vetor-109805064.jpg"
   },
   {
     "cryptoName": "Litecoin",
-    "cryptoSimbol": "LTC"
+    "cryptoSimbol": "LTC",
+    "imageUrl": "https://img.freepik.com/vetores-gratis/conceito-financeiro-de-codigo-aberto-de-vetor-de-logotipo-de-criptomoeda-litecoin-blockchain_53876-126024.jpg?w=2000"
   },
   {
     "cryptoName": "Bitcoin Cash",
-    "cryptoSimbol": "BCH"
+    "cryptoSimbol": "BCH",
+    "imageUrl": "https://play-lh.googleusercontent.com/1pmgsGXFhuM5DBjfkMeFDi_RXAEhmq5tUIAoqJKUTtz7OsoM0AQD9KWtUCpdDs8C2Q"
   },
   {
     "cryptoName": "Shiba Inu",
-    "cryptoSimbol": "SHIB"
+    "cryptoSimbol": "SHIB",
+    "imageUrl": "https://static.vecteezy.com/system/resources/previews/002/433/700/non_2x/shiba-inu-shib-coin-symbol-vector.jpg"
   },
   {
     "cryptoName": "Cosmos",
-    "cryptoSimbol": "ATOM"
+    "cryptoSimbol": "ATOM",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/0473/8252/8152/products/mockup-a4d125eb_1200x1200.jpg?v=1599070628"
   }
 ]

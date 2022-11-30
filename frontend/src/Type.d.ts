@@ -7,6 +7,8 @@ interface IAppContext {
   setName: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+  cryptos: [] | TCrypto[];
+  setCryptos: React.Dispatch<React.SetStateAction<TCrypto[]>>;
 }
 
 type IRegister = {
@@ -22,6 +24,14 @@ type ILogin = {
 
 type ILocalStorage = {
   token: string;
+}
+
+type TCrypto = {
+  id: number;
+  cryptoName: string;
+  cryptoSimbol: string;
+  votes: number;
+  imageUrl: string;
 }
 
 type onChange = (e: React.ChangeEvent<HTMLInputElement>) => void

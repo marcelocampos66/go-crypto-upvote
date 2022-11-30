@@ -12,6 +12,7 @@ type Crypto struct {
 	Name      string `json:"cryptoName"`
 	Code      string `json:"cryptoSimbol"`
 	Votes     int    `json:"votes" gorm:"default:1"`
+	ImgUrl    string `json:"imageUrl"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

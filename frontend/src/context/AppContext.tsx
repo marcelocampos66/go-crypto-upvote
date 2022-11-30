@@ -20,6 +20,8 @@ export const DEFAULT_STATE = {
   setName: () => {},
   errorMessage: '',
   setErrorMessage: () => {},
+  cryptos: [],
+  setCryptos: () => {},
 };
 
 const AppContext = createContext<IAppContext>(DEFAULT_STATE);

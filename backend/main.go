@@ -30,9 +30,11 @@ func main() {
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowCredentials: true,
+		AllowedHeaders:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT"},
 		Debug:            true,
 	})
-	httpHandler := cors.Default().Handler(router)
-	xablau := c.Handler(httpHandler)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.PORT), xablau))
+	corsHandler := cors.Default().Handler(router)
+	httpHandler := c.Handler(corsHandler)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.PORT), httpHandler))
 }
