@@ -43,10 +43,10 @@ const CryptoCard: React.FC<Props> = ({ crypto }) => {
         <img src={ crypto.imageUrl } alt="rover" />
       </div>
       <div className="card-body">
-        <span className="tag tag-teal">{ `Ranking #${crypto.id} in market cap` }</span>
+        <span className="tag tag-teal">{ `Ranking #${crypto.id}` }</span>
         <h4>{ crypto.cryptoName }</h4>
         <p>{ `Votes quantity: ${crypto.votes}` }</p>
-        <p>{ `Current quotation: ${crypto.votes}` }</p>
+        <p>{ `Current quotation: ${parseFloat(crypto.quotation).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}` }</p>
         <div className="vote">
           <img src={ crypto.imageUrl } alt="vote" />
           <div className="vote-info">

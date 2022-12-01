@@ -32,6 +32,7 @@ type TCrypto = {
   cryptoSimbol: string;
   votes: number;
   imageUrl: string;
+  quotation: string;
 }
 
 type onChange = (e: React.ChangeEvent<HTMLInputElement>) => void
