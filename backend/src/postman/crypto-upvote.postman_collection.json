@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "b3d34248-4373-4ae2-87d9-2f7210fcd991",
+		"name": "crypto-upvote",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19625078"
+	},
+	"item": [
+		{
+			"name": "Cryptos",
+			"item": [
+				{
+					"name": "GET Cryptos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{crypto-vote-app-host}}/v1/crypto-upvote/cryptos?page=1",
+							"host": [
+								"{{crypto-vote-app-host}}"
+							],
+							"path": [
+								"v1",
+								"crypto-upvote",
+								"cryptos"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Crypto By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{crypto-vote-app-host}}/v1/crypto-upvote/cryptos/:cryptoId",
+							"host": [
+								"{{crypto-vote-app-host}}"
+							],
+							"path": [
+								"v1",
+								"crypto-upvote",
+								"cryptos",
+								":cryptoId"
+							],
+							"variable": [
+								{
+									"key": "cryptoId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Cryptos Upvote",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{crypto-vote-app-host}}/v1/crypto-upvote/cryptos/:cryptoId/up",
+							"host": [
+								"{{crypto-vote-app-host}}"
+							],
+							"path": [
+								"v1",
+								"crypto-upvote",
+								"cryptos",
+								":cryptoId",
+								"up"
+							],
+							"variable": [
+								{
+									"key": "cryptoId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Cryptos Downvote",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{crypto-vote-app-host}}/v1/crypto-upvote/cryptos/:cryptoId/down",
+							"host": [
+								"{{crypto-vote-app-host}}"
+							],
+							"path": [
+								"v1",
+								"crypto-upvote",
+								"cryptos",
+								":cryptoId",
+								"down"
+							],
+							"variable": [
+								{
+									"key": "cryptoId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "POST User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Unknow User\",\n    \"email\": \"email@email.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{crypto-vote-app-host}}/v1/crypto-upvote/users",
+							"host": [
+								"{{crypto-vote-app-host}}"
+							],
+							"path": [
+								"v1",
+								"crypto-upvote",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST LOGIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const isOk = responseCode.code === 200;",
+									"",
+									"tests[\"Status code is 200\"] = isOk",
+									"",
+									"if (isOk) {",
+									"  var jsonData = JSON.parse(responseBody);",
+									"  postman.setEnvironmentVariable('access_token', jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"email@email.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{crypto-vote-app-host}}/v1/crypto-upvote/login",
+							"host": [
+								"{{crypto-vote-app-host}}"
+							],
+							"path": [
+								"v1",
+								"crypto-upvote",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User By ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Unknow User\",\n    \"email\": \"email@email.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{crypto-vote-app-host}}/v1/crypto-upvote/users/:userId",
+							"host": [
+								"{{crypto-vote-app-host}}"
+							],
+							"path": [
+								"v1",
+								"crypto-upvote",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
