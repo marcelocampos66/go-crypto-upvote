@@ -2,7 +2,6 @@ package main
 
 import (
 	"backend/src/config"
-	"backend/src/database"
 	"backend/src/router"
 	"fmt"
 	"log"
@@ -19,12 +18,6 @@ func main() {
 	config.InitialConfigs()
 
 	router := router.GetRouter()
-
-	db, err := database.Connect()
-	if err != nil {
-		log.Fatal(err)
-	}
-	database.RunMigrationsAndSeeds(db)
 
 	fmt.Printf("Server listening on port: %d!\n", config.PORT)
 	c := cors.New(cors.Options{

@@ -1,0 +1,49 @@
+version: '3'
+services:
+  frontend:
+    build: './frontend'
+    image: crypto-upvote-frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_CRYPTO_VOTE_API=${API_URL_CONNECTION}
+    depends_on:
+      - "backend"
+    networks:
+      - crypto-upvote
+    restart: always
+
+  backend:
+    build: './backend'
+    image: crypto-upvote-backend
+    container_name: backend
+    networks:
+      - crypto-upvote
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=${API_PORT}
+      - DB_URL=${API_DB_URL}
+      - JWT_SECRET=${API_JWT_SECRET}
+      - MARKET_API=${API_MARKET_API}
+    depends_on:
+      - "appdatabase"
+    restart: always
+
+  appdatabase:
+    restart: always
+    image: postgres
+    container_name: appdatabase
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - crypto-upvote
+
+networks:
+    crypto-upvote:
+      driver: bridge

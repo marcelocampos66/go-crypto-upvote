@@ -3,11 +3,11 @@ class UsersApi {
   private content: string;
 
   constructor() {
-    this.url = process.env.REACT_APP_CRYPTO_VOTE_API ||'http://0.0.0.0:3002';
+    this.url = process.env.REACT_APP_CRYPTO_VOTE_API ||'http://localhost:8080';
     this.content = 'application/json';
   }
 
-  public async register(data: IRegister) {
+  public async register(data: IRegister) {\
     const endpoint = `${this.url}/v1/crypto-upvote/users`;
     return fetch(endpoint, {
       method: 'POST',

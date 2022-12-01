@@ -16,7 +16,7 @@ import (
 
 func readCryptoFile() ([]database.Crypto, error) {
 	rootPath, _ := os.Getwd()
-	filePath := fmt.Sprintf("%s/cryptos.json", rootPath)
+	filePath := fmt.Sprintf("%s/src/database/json/cryptos.json", rootPath)
 
 	content, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -55,6 +55,8 @@ func Connect() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	RunMigrationsAndSeeds(db)
 
 	return db, nil
 }
