@@ -1,0 +1,17 @@
+p {
+  font-family: "Poppins", sans-serif;
+}
+
+.popMessage {
+  width: 30%;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 1;
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+}

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/src/entities"
 	enumhelper "backend/src/enum-helpers"
 	httphelper "backend/src/http-helper"
 	"backend/src/repositories"
@@ -8,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/gorilla/mux"
 )
@@ -35,7 +37,21 @@ func (this CryptoController) GetCryptos(writer http.ResponseWriter, request *htt
 		return
 	}
 
-	httphelper.HttpResponse(writer, http.StatusOK, cryptos)
+	var waitGroup sync.WaitGroup
+	waitGroup.Add(len(cryptos))
+
+	var updatedCryptos []entities.Crypto
+
+	go func() {
+		for _, crypto := range cryptos {
+			updatedCrypto := this.CryptoRepository.GetCryptoLastQuotation(crypto, &waitGroup)
+			updatedCryptos = append(updatedCryptos, updatedCrypto)
+		}
+	}()
+
+	waitGroup.Wait()
+
+	httphelper.HttpResponse(writer, http.StatusOK, updatedCryptos)
 }
 
 func (this CryptoController) GetCrypto(writer http.ResponseWriter, request *http.Request) {
