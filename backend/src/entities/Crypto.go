@@ -10,6 +10,7 @@ type Crypto struct {
 	Code      string    `json:"cryptoSimbol"`
 	Votes     int       `json:"votes"`
 	ImgUrl    string    `json:"imageUrl"`
+	Quotation string    `json:"quotation"`
 	CreatedAt time.Time `json:"createdAt,omitempty"`
 	UpdatedAt time.Time `json:"updatedAt,omitempty"`
 }

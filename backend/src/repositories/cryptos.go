@@ -1,15 +1,22 @@
 package repositories
 
 import (
+	"backend/src/config"
 	"backend/src/database"
 	"backend/src/entities"
 	enumhelper "backend/src/enum-helpers"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"sync"
 )
 
 type ICryptoRepository interface {
 	GetPageOfCryptos(page uint) ([]entities.Crypto, error)
 	GetCryptoById(cryptoId uint) (entities.Crypto, error)
 	Vote(cryptoId uint, crypto *entities.Crypto) error
+	GetCryptoLastQuotation(crypto entities.Crypto, wg *sync.WaitGroup) entities.Crypto
 }
 
 type CryptoRepository struct{}
@@ -63,4 +70,44 @@ func (this CryptoRepository) Vote(cryptoId uint, crypto *entities.Crypto) error 
 	}
 
 	return nil
+}
+
+func (this CryptoRepository) GetCryptoLastQuotation(crypto entities.Crypto, wg *sync.WaitGroup) entities.Crypto {
+	defer wg.Done()
+	var HOST string = config.MARKET_API
+	var url string = fmt.Sprintf("%s/api/%s/ticker", HOST, crypto.Code)
+
+	response, err := http.Get(url)
+	if err != nil {
+		return crypto
+	}
+	defer response.Body.Close()
+
+	type quotation struct {
+		High string `json:"high,omitempty"`
+		Low  string `json:"low,omitempty"`
+		Vol  string `json:"vol,omitempty"`
+		Last string `json:"last,omitempty"`
+		Buy  string `json:"buy,omitempty"`
+		Sell string `json:"sell,omitempty"`
+		Open string `json:"open,omitempty"`
+	}
+	type apiResponse struct {
+		Ticker quotation `json:"ticker,omitempty"`
+	}
+	body := apiResponse{}
+
+	responseBody, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return crypto
+	}
+
+	err = json.Unmarshal(responseBody, &body)
+	if err != nil {
+		return crypto
+	}
+
+	crypto.Quotation = body.Ticker.Last
+
+	return crypto
 }

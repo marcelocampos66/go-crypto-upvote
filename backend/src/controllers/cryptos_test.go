@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"sync"
 	"testing"
 
 	"github.com/gorilla/mux"
@@ -41,6 +42,14 @@ func (this MockCryptoRepository) GetCryptoById(cryptoId uint) (entities.Crypto, 
 func (this MockCryptoRepository) Vote(cryptoId uint, crypto *entities.Crypto) error {
 
 	return nil
+}
+
+func (this MockCryptoRepository) GetCryptoLastQuotation(crypto entities.Crypto, wg *sync.WaitGroup) entities.Crypto {
+	defer wg.Done()
+
+	crypto.Quotation = "1000"
+
+	return crypto
 }
 
 func TestCryptosController(t *testing.T) {
